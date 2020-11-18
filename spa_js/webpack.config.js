@@ -12,10 +12,10 @@ module.exports = {
         filename: "main.js",
         path: path.resolve(__dirname, "dist")
     },
-    plugins: {
+    plugins: [
         new HtmlWebpackPlugin({
-            template: "./src/clientes.html",
-            filename: "index.html"
+            template: './src/clientes.html',
+            filename: 'index.html'
         })
-    }
+    ]
 }
