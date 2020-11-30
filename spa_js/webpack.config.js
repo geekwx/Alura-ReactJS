@@ -1,21 +1,22 @@
-const HtmlWebpackPlugin = require("html-webpack-plugin")
 const path = require("path")
+const HtmlWebpackPlugin = require("html-webpack-plugin")
 
-module.exports = {
+module.exports = { 
     mode: "development",
     devServer: {
-        open: true, 
-        contentBase: "dist"
+      open: true,
+      contentBase: "dist"
     },
-    entry: "./src/componentes/lista/listagem-cliente.js",
+    entry: "./src/componentes/listagem/listagem-cliente.js",
     output: {
         filename: "main.js",
-        path: path.resolve(__dirname, "dist")
+        path: path.resolve(__dirname, "dist"),
+        publicPath: "dist"
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: './src/clientes.html',
-            filename: 'index.html'
+            template: "./src/clientes.html",
+            filename: "index.html"
         })
     ],
     module: {
@@ -23,21 +24,20 @@ module.exports = {
             {
                 test: /\.css$/,
                 use: ["style-loader", "css-loader"]
-        },
-        {
-            test: /\.html$/,
-            use:["html-loader"]
-        },
-        {
-            test: /\.png$/,
-            use: {
-                loader: "file-loader",
-                options: {
-                    name: "[name].[ext]"
+            },
+            {
+                test: /\.html$/,
+                use:["html-loader"]
+            },
+            {
+                test: /\.png$/,
+                use: {
+                    loader:"file-loader",
+                    options: {
+                        name: "[name].[ext]" 
+                    }
                 }
-            }
-        }
-
+          }
         ]
     }
 }
