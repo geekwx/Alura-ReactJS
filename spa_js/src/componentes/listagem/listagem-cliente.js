@@ -20,9 +20,8 @@ const criaCorpoTabela  = (tabela) => {
     <td>${cpf}</td>
     <td>${nome}</td>
     <button type="button" class="btn btn-danger" onclick="removeCliente(${id})">Excluir</button>
-    <a href="edita-clientes.html?id=${id}">
-    <button type=""button class="btn btn-info">Editar</button>
-    </a>
+    <button type=""button class="btn btn-info" onclick="navegacao('/edita'?id=${id}); return false;">Editar</button>
+    
     
     
 `

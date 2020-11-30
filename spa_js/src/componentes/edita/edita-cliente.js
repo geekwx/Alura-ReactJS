@@ -1,19 +1,23 @@
+import { detalhaCliente, editaCliente  } from '../../api/cliente'
+import validaCPF from '../validacao/validaCPF'
+
+
+
+const eventoForm = form => {
 const pegaURL = new URL(window.location)
 
 const id = pegaURL.searchParams.get('id')
 
-const inputCPF = document.querySelector('[data-cpf]')
-const inputNome = document.querySelector('[data-nome]')
+const inputCPF = form.querySelector('[data-cpf]')
+const inputNome = form.querySelector('[data-nome]')
 
 detalhaCliente(id).then( dados => {
     inputCPF.value = dados[0].cpf 
     inputNome.value = dados[0].nome
 })
 
-const formEdicao = document.querySelector('[data-form]')
-
 const alerta = (classe, mensagem) => { 
-    const linha = document.createElement('tr');
+    const linha = document.createElement('section');
 
     const conteudoLinha = `
     <div class="${classe}">${mensagem}</div>
@@ -23,29 +27,24 @@ const alerta = (classe, mensagem) => {
     linha.innerHTML = conteudoLinha;
     return linha;
 } 
-formEdicao.addEventListener('submit', event => { 
+form.addEventListener('submit', event => { 
     event.preventDefault()
 
     if(!validaCPF(inputCPF.value)){
-        alert("ESSE NÃO EXISTE")
+        alert("ESSE CPF NÃO EXISTE")
         return 
     }
 
     editaCliente(id, inputCPF.value, inputNome.value)
-    .then( resposta => { 
-        if( resposta.status === 200){
-            formEdicao.appendChild(alerta(
+    .then( () =>  
+            form.appendChild(alerta(
                 "alert alert-success",
                 "CLIENTE EDITADO COM SUCESSO !"
-            ))
-        } else { 
-            formEdicao.appendChild(alerta(
+            )))
+            .catch(() => form.appendChild(alerta(
                 "alert alert-warning",
                 "O CLIENTE NÃO PODE SER EDITADO !"
-            ))
-        }
-    })
-    
-    
-
+            )) )
 })
+}
+export default eventoForm 
